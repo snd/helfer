@@ -41,75 +41,76 @@ module.exports =
     )
     test.done()
 
-  'splitArray': (test) ->
-    test.deepEqual [[]],
-      helfer.splitArray [], 'where'
+  'splitArrayWhere': (test) ->
     test.deepEqual [[], []],
-      helfer.splitArray ['where'], 'where'
-    test.deepEqual [['first']],
-      helfer.splitArray ['first'], 'where'
-    test.deepEqual [['first', 'order', 'report']],
-      helfer.splitArray ['first', 'order', 'report'], 'where'
-    test.deepEqual [['first', 'order', 'report'], []],
-      helfer.splitArray ['first', 'order', 'report', 'where'], 'where'
-    test.deepEqual [['first', 'order', 'report'], ['created', 'at']],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'created', 'at'], 'where'
-    test.deepEqual [['first', 'order', 'report'], ['created', 'at'], []],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'created', 'at', 'where'], 'where'
-    test.deepEqual [['first', 'order', 'report'], ['created', 'at'], ['id']],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'created', 'at', 'where', 'id'], 'where'
-
-    test.deepEqual [[]],
-      helfer.splitArray [], []
-    test.deepEqual [[]],
-      helfer.splitArray [], ['where']
-    test.deepEqual [[], []],
-      helfer.splitArray ['where'], ['where']
-    test.deepEqual [['first']],
-      helfer.splitArray ['first'], ['where']
-    test.deepEqual [['first', 'order', 'report']],
-      helfer.splitArray ['first', 'order', 'report'], ['where']
-    test.deepEqual [['first', 'order', 'report'], []],
-      helfer.splitArray ['first', 'order', 'report', 'where'], ['where']
-    test.deepEqual [['first', 'order', 'report'], ['created', 'at']],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'created', 'at'], ['where']
-    test.deepEqual [['first', 'order', 'report'], ['created', 'at'], []],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'created', 'at', 'where'], ['where']
-    test.deepEqual [['first', 'order', 'report'], ['created', 'at'], ['id']],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'created', 'at', 'where', 'id'], ['where']
-
-    test.deepEqual [[]],
-      helfer.splitArray [], []
-    test.deepEqual [[]],
-      helfer.splitArray [], ['order', 'by']
-    test.deepEqual [[], []],
-      helfer.splitArray ['order', 'by'], ['order', 'by']
-    test.deepEqual [['first']],
-      helfer.splitArray ['first'], ['order', 'by']
-    test.deepEqual [['first', 'order', 'report']],
-      helfer.splitArray ['first', 'order', 'report'], ['order', 'by']
-    test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id']],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'order', 'id'], ['order', 'by']
-    test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id'], []],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'order', 'id', 'order', 'by'], ['order', 'by']
-    test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id'], ['created', 'at', 'desc']],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'order', 'id', 'order', 'by', 'created', 'at', 'desc'], ['order', 'by']
-    test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id'], ['created', 'at', 'desc'], ['count', 'asc']],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'order', 'id', 'order', 'by', 'created', 'at', 'desc', 'order', 'by', 'count', 'asc'], ['order', 'by']
-    test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id'], ['created', 'at', 'desc'], ['order']],
-      helfer.splitArray ['first', 'order', 'report', 'where', 'order', 'id', 'order', 'by', 'created', 'at', 'desc', 'order', 'by', 'order'], ['order', 'by']
+      helfer.splitArrayWhere [], -> true
+    test.deepEqual [[], [1, 2, 3]],
+      helfer.splitArrayWhere [1, 2, 3], -> true
+    test.deepEqual [[1, 2, 3], []],
+      helfer.splitArrayWhere [1, 2, 3], -> false
+    test.deepEqual [[1], [2, 3]],
+      helfer.splitArrayWhere [1, 2, 3], (x) -> x is 2
 
     test.done()
 
-  'splitWith': (test) ->
+
+  'splitArrayWhereSequence': (test) ->
+    test.deepEqual [[]],
+      helfer.splitArrayWhereSequence [], 'where'
     test.deepEqual [[], []],
-      helfer.splitWith [], -> true
-    test.deepEqual [[], [1, 2, 3]],
-      helfer.splitWith [1, 2, 3], -> true
-    test.deepEqual [[1, 2, 3], []],
-      helfer.splitWith [1, 2, 3], -> false
-    test.deepEqual [[1], [2, 3]],
-      helfer.splitWith [1, 2, 3], (x) -> x is 2
+      helfer.splitArrayWhereSequence ['where'], 'where'
+    test.deepEqual [['first']],
+      helfer.splitArrayWhereSequence ['first'], 'where'
+    test.deepEqual [['first', 'order', 'report']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report'], 'where'
+    test.deepEqual [['first', 'order', 'report'], []],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where'], 'where'
+    test.deepEqual [['first', 'order', 'report'], ['created', 'at']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'created', 'at'], 'where'
+    test.deepEqual [['first', 'order', 'report'], ['created', 'at'], []],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'created', 'at', 'where'], 'where'
+    test.deepEqual [['first', 'order', 'report'], ['created', 'at'], ['id']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'created', 'at', 'where', 'id'], 'where'
+
+    test.deepEqual [[]],
+      helfer.splitArrayWhereSequence [], []
+    test.deepEqual [[]],
+      helfer.splitArrayWhereSequence [], ['where']
+    test.deepEqual [[], []],
+      helfer.splitArrayWhereSequence ['where'], ['where']
+    test.deepEqual [['first']],
+      helfer.splitArrayWhereSequence ['first'], ['where']
+    test.deepEqual [['first', 'order', 'report']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report'], ['where']
+    test.deepEqual [['first', 'order', 'report'], []],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where'], ['where']
+    test.deepEqual [['first', 'order', 'report'], ['created', 'at']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'created', 'at'], ['where']
+    test.deepEqual [['first', 'order', 'report'], ['created', 'at'], []],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'created', 'at', 'where'], ['where']
+    test.deepEqual [['first', 'order', 'report'], ['created', 'at'], ['id']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'created', 'at', 'where', 'id'], ['where']
+
+    test.deepEqual [[]],
+      helfer.splitArrayWhereSequence [], []
+    test.deepEqual [[]],
+      helfer.splitArrayWhereSequence [], ['order', 'by']
+    test.deepEqual [[], []],
+      helfer.splitArrayWhereSequence ['order', 'by'], ['order', 'by']
+    test.deepEqual [['first']],
+      helfer.splitArrayWhereSequence ['first'], ['order', 'by']
+    test.deepEqual [['first', 'order', 'report']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report'], ['order', 'by']
+    test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'order', 'id'], ['order', 'by']
+    test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id'], []],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'order', 'id', 'order', 'by'], ['order', 'by']
+    test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id'], ['created', 'at', 'desc']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'order', 'id', 'order', 'by', 'created', 'at', 'desc'], ['order', 'by']
+    test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id'], ['created', 'at', 'desc'], ['count', 'asc']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'order', 'id', 'order', 'by', 'created', 'at', 'desc', 'order', 'by', 'count', 'asc'], ['order', 'by']
+    test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id'], ['created', 'at', 'desc'], ['order']],
+      helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'order', 'id', 'order', 'by', 'created', 'at', 'desc', 'order', 'by', 'order'], ['order', 'by']
 
     test.done()
 

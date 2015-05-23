@@ -103,7 +103,18 @@
     helfer.findIndex objects, (object) ->
       helfer.isObject(object) and (not helfer.isUndefined object[property])
 
-  helfer.splitArray = (array, value) ->
+  # split array into two parts:
+  # the first part contains all elements up to (but not including)
+  # the first element for which predicate returned true.
+  # the second part contains all elements from (and including)
+  # the first element for which preducate returned true.
+  helfer.splitArrayWhere = (array, predicate) ->
+    index = helfer.findIndex array, predicate
+    if index is -1
+      return [array, []]
+    [array.slice(0, index), array.slice(index)]
+
+  helfer.splitArrayWhereSequence = (array, value) ->
     splitSequence = helfer.coerceToArray value
     partitions = []
     currentPartition = []
@@ -131,17 +142,6 @@
       currentPartition = currentPartition.concat(matchingSequence)
     partitions.push currentPartition
     return partitions
-
-  # split array into two parts:
-  # the first part contains all elements up to (but not including)
-  # the first element for which predicate returned true.
-  # the second part contains all elements from (and including)
-  # the first element for which preducate returned true.
-  helfer.splitWith = (array, predicate) ->
-    index = helfer.findIndex array, predicate
-    if index is -1
-      return [array, []]
-    [array.slice(0, index), array.slice(index)]
 
   helfer.reverseIndex = (index) ->
     reverseIndex = {}

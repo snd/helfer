@@ -61,6 +61,12 @@ also look at the [tests](test) (and [code](src/helfer.coffee)) for documentation
 - `coerceToArray(array | value | null | undefined)` -> returns `arg` if it is an array. returns `[arg]` otherwise. returns `[]` if `arg` is `null` or `undefined`.
 - `findIndex(array, predicate)` -> returns the index of the first `array` element for which `predicate` returns true. otherwise returns `-1`.
 - `findIndexOfFirstObjectHavingProperty(objects, property)` returns the index of the first of `objects` for which `property` is not `undefined`. otherwise returns `-1`.
+- `splitArrayWhere(array, predicate)` -> split `array` into two parts:
+  the first part contains all elements up to (but not including)
+  the first element for which `predicate` returned `true`.
+  the second part contains all elements from (and including)
+  the first element for which `preducate` returned `true`.
+- `splitArrayWhereSequence(array, sequence)` -> split `array` on each occurence of `sequence` in `array`
 
 ### [object](test/object.coffee)
 

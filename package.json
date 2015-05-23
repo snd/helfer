@@ -1,0 +1,50 @@
+{
+  "name": "helfer",
+  "version": "0.1.0",
+  "description": "useful helper functions",
+  "keywords": [
+    "helper",
+    "common",
+    "utility",
+    "string",
+    ""
+  ],
+  "homepage": "http://github.com/snd/helfer",
+  "author": {
+    "name": "Maximilian Krüger",
+    "email": "kruemaxi@gmail.com",
+    "url": "http://github.com/snd"
+  },
+  "contributors": [],
+  "bugs": {
+    "url": "http://github.com/snd/helfer/issues",
+    "email": "kruemaxi@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/snd/helfer.git"
+  },
+  "licenses": {
+    "type": "MIT",
+    "url": "git://github.com/snd/helfer/LICENSE"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "nodeunit": "0.9.1",
+    "coffee-script": "1.9.2",
+    "bluebird": "2.9.25",
+    "lodash": "3.9.1",
+    "q": "1.4.1"
+  },
+  "main": "lib/helfer",
+  "scripts": {
+    "compile": "coffee --bare --compile --output lib src",
+    "prepublish": "npm run compile",
+    "pretest": "npm run compile",
+    "test": "nodeunit test/*.coffee"
+  }
+}

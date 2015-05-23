@@ -1,0 +1,30 @@
+{
+  "name": "helfer",
+  "version": "0.1.0",
+  "homepage": "https://github.com/snd/helfer",
+  "authors": [
+    "Maximilian Krüger <kruemaxi@googlemail.com>"
+  ],
+  "description": "useful helper functions",
+  "keywords": [
+    "helper",
+    "common",
+    "utility",
+    "string",
+    ""
+  ],
+  "main": "lib/helfer.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

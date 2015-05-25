@@ -18,24 +18,24 @@ module.exports =
 
     test.done()
 
-  'findIndexOfFirstObjectHavingProperty': (test) ->
-    test.equals -1, helfer.findIndexOfFirstObjectHavingProperty(
+  'findIndexWhereProperty': (test) ->
+    test.equals -1, helfer.findIndexWhereProperty(
       []
       'a'
     )
-    test.equals -1, helfer.findIndexOfFirstObjectHavingProperty(
+    test.equals -1, helfer.findIndexWhereProperty(
       [{}, {}, {b: 'b'}]
       'a'
     )
-    test.equals 0, helfer.findIndexOfFirstObjectHavingProperty(
+    test.equals 0, helfer.findIndexWhereProperty(
       [{a: 'a'}, {}, {b: 'b'}]
       'a'
     )
-    test.equals -1, helfer.findIndexOfFirstObjectHavingProperty(
+    test.equals -1, helfer.findIndexWhereProperty(
       [{a: undefined}, {}, {b: 'b'}]
       'a'
     )
-    test.equals 3, helfer.findIndexOfFirstObjectHavingProperty(
+    test.equals 3, helfer.findIndexWhereProperty(
       [{}, {}, {b: 'b'}, {a: null}]
       'a'
     )
@@ -53,6 +53,38 @@ module.exports =
 
     test.done()
 
+  'findIndexWhereSequence': (test) ->
+    test.equal -1, helfer.findIndexWhereSequence [], []
+    test.equal -1, helfer.findIndexWhereSequence [], ['where']
+    test.equal -1, helfer.findIndexWhereSequence ['first'], []
+
+    test.equal 0, helfer.findIndexWhereSequence ['where'], ['where']
+    test.equal -1, helfer.findIndexWhereSequence ['first'], ['where']
+    test.equal -1, helfer.findIndexWhereSequence ['first', 'order', 'report'], ['where']
+    test.equal 3, helfer.findIndexWhereSequence ['first', 'order', 'report', 'where'], ['where']
+    test.equal 1, helfer.findIndexWhereSequence ['first', 'where', 'created', 'at'], ['where']
+    test.equal 2, helfer.findIndexWhereSequence ['first', 'order', 'where', 'created', 'at', 'where'], ['where']
+    test.equal 4, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['where']
+
+    test.equal 0, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['first']
+    test.equal 0, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['first', 'order']
+    test.equal 0, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['first', 'order', 'report']
+    test.equal 1, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['order', 'report', 'log']
+    test.equal 2, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['report', 'log', 'where']
+    test.equal 3, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['log', 'where', 'created', 'at']
+    test.equal 4, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['where', 'created', 'at', 'where']
+
+    test.equal 5, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['created', 'at', 'where', 'id']
+    test.equal 6, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['at', 'where', 'id']
+    test.equal 7, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['where', 'id']
+
+    test.equal 8, helfer.findIndexWhereSequence ['first', 'order', 'report', 'log', 'where', 'created', 'at', 'where', 'id'], ['id']
+
+    test.equal 6, helfer.findIndexWhereSequence ['first', 'order', 'report', 'where', 'order', 'id', 'order', 'by', 'created', 'at', 'desc', 'order', 'by', 'order'], ['order', 'by']
+    test.equal 3, helfer.findIndexWhereSequence ['created', 'at', 'desc', 'order', 'by', 'order'], ['order', 'by']
+    test.equal -1, helfer.findIndexWhereSequence ['order'], ['order', 'by']
+
+    test.done()
 
   'splitArrayWhereSequence': (test) ->
     test.deepEqual [[]],

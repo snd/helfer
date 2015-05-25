@@ -65,9 +65,25 @@
       helfer.uppercaseFirstLetter string.toLowerCase()
     helfer.lowercaseFirstLetter array.map(capitalize).join('')
 
+  # splitUnderscore('one_two_three') -> ['one', 'two', 'three']
+  helfer.splitUnderscore = (string) ->
+    if string is ''
+      return []
+    string.split('_')
+
   # joinUnderscore(['one', 'two', 'three']) -> 'one_two_three'
   helfer.joinUnderscore = (array) ->
     array.join('_')
+
+  # splitUppercaseUnderscore('ONE_TWO_THREE') -> ['one', 'two', 'three']
+  helfer.splitUppercaseUnderscore = (string) ->
+    if string is ''
+      return []
+    string.split('_').map (x) -> x.toLowerCase()
+
+  # joinUppercaseUnderscore(['one', 'two', 'three']) -> 'ONE_TWO_THREE'
+  helfer.joinUppercaseUnderscore = (array) ->
+    array.map((x) -> x.toUpperCase()).join('_')
 
 ################################################################################
 # array
@@ -99,9 +115,47 @@
           return index
     return -1
 
-  helfer.findIndexOfFirstObjectHavingProperty = (objects, property) ->
+  helfer.findIndexWhereProperty = (objects, property) ->
     helfer.findIndex objects, (object) ->
       helfer.isObject(object) and (not helfer.isUndefined object[property])
+
+  helfer.findIndexWhereSequence = (array, sequence) ->
+    if sequence.length is 0
+      return -1
+
+    matchingSequenceIndex = -1
+
+    index = -1
+    length = array.length
+    while ++index < length
+      # matching so far
+      if matchingSequenceIndex isnt -1
+        matchingSequenceIndex++
+
+        # complete match
+        if matchingSequenceIndex is sequence.length
+          return index - matchingSequenceIndex
+
+        # no longer matching
+        if array[index] isnt sequence[matchingSequenceIndex]
+          matchingSequenceIndex = -1
+
+        # otherwise still matching
+
+      else
+        # just started matching
+        # TODO careful here with null values
+        if array[index] is sequence[0]
+          # single element sequence
+          if sequence.length is 1
+            return index
+          matchingSequenceIndex = 0
+
+    # was still matching at the end
+    if matchingSequenceIndex isnt -1 and matchingSequenceIndex + 1 is sequence.length
+      return index - sequence.length
+
+    return -1
 
   # split array into two parts:
   # the first part contains all elements up to (but not including)
@@ -114,34 +168,22 @@
       return [array, []]
     [array.slice(0, index), array.slice(index)]
 
+  # TODO implement in terms of findIndexOfSubarray
   helfer.splitArrayWhereSequence = (array, value) ->
-    splitSequence = helfer.coerceToArray value
-    partitions = []
-    currentPartition = []
-    i = 0
-    length = array.length
-    matchingSequence = []
-    while i < length
-      # matching so far
-      if array[i] is splitSequence[matchingSequence.length]
-        matchingSequence.push value[matchingSequence.length]
-        # complete match
-        if splitSequence.length is matchingSequence.length
-          partitions.push currentPartition
-          currentPartition = []
-          matchingSequence = []
-      # not matching
+    sequence = helfer.coerceToArray value
+    results = []
+    rest = array
+
+    while true
+      index = helfer.findIndexWhereSequence rest, sequence
+      # no more matches
+      if index is -1
+        results.push rest
+        return results
+      # another match
       else
-        # no longer matching
-        if matchingSequence.length isnt 0
-          currentPartition = currentPartition.concat(matchingSequence)
-          matchingSequence = []
-        currentPartition.push array[i]
-      i++
-    if matchingSequence.length isnt 0
-      currentPartition = currentPartition.concat(matchingSequence)
-    partitions.push currentPartition
-    return partitions
+        results.push rest.slice(0, index)
+        rest = rest.slice(index + sequence.length)
 
   helfer.reverseIndex = (index) ->
     reverseIndex = {}

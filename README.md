@@ -54,13 +54,17 @@ also look at the [tests](test) (and [code](src/helfer.coffee)) for documentation
 - `lowercaseFirstLetter('FOO')` -> `'fOO'`
 - `splitCamelcase('oneTwoThree')` -> `['one', 'two', 'three']`
 - `joinCamelcase(['One', 'two', 'three'])` -> `'oneTwoThree'`
+- `splitUnderscore('one_two_three')` -> `['one', 'two', 'three']`
 - `joinUnderscore(['one', 'two', 'three'])` -> `'one_two_three'`
+- `splitUppercaseUnderscore('ONE_TWO_THREE')` -> `['one', 'two', 'three']`
+- `joinUppercaseUnderscore(['one', 'two', 'three'])` -> `'ONE_TWO_THREE'`
 
 ### [array](test/array.coffee)
 
-- `coerceToArray(array | value | null | undefined)` -> returns `arg` if it is an array. returns `[arg]` otherwise. returns `[]` if `arg` is `null` or `undefined`.
+- `coerceToArray(array | value | null | undefined)` -> always returns an array. returns `arg` if it is an array. returns `[arg]` otherwise. returns `[]` if `arg` is `null` or `undefined`.
 - `findIndex(array, predicate)` -> returns the index of the first `array` element for which `predicate` returns true. otherwise returns `-1`.
-- `findIndexOfFirstObjectHavingProperty(objects, property)` returns the index of the first of `objects` for which `property` is not `undefined`. otherwise returns `-1`.
+- `findIndexWhereProperty(objects, property)` returns the index of the first of `objects` for which `property` is not `undefined`. otherwise returns `-1`.
+- `findIndexOfSequence(array, sequence)` -> returns the index of the first occurence of `sequence` in `array`. otherwise returns `-1`
 - `splitArrayWhere(array, predicate)` -> split `array` into two parts:
   the first part contains all elements up to (but not including)
   the first element for which `predicate` returned `true`.

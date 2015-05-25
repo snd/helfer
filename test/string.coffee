@@ -60,9 +60,52 @@ module.exports =
 
     test.done()
 
+  'splitUnderscore': (test) ->
+    test.deepEqual [],
+      helfer.splitUnderscore ''
+    test.deepEqual ['a'],
+      helfer.splitUnderscore 'a'
+    test.deepEqual ['first'],
+      helfer.splitUnderscore 'first'
+    test.deepEqual ['first', 'where', 'id'],
+      helfer.splitUnderscore 'first_where_id'
+    test.deepEqual ['a', 'one', 'a', 'two', 'a', 'three'],
+      helfer.splitUnderscore 'a_one_a_two_a_three'
+    test.deepEqual ['configUrl', 'prefix'],
+      helfer.splitUnderscore 'configUrl_prefix'
+    test.deepEqual ['pages', 'order', 'by', 'created', 'at', 'desc'],
+      helfer.splitUnderscore 'pages_order_by_created_at_desc'
+
+    test.done()
+
   'joinUnderscore': (test) ->
     test.equal '', helfer.joinUnderscore []
     test.equal 'first', helfer.joinUnderscore ['first']
     test.equal 'first_where_id', helfer.joinUnderscore ['first', 'where', 'id']
+
+    test.done()
+
+  'splitUppercaseUnderscore': (test) ->
+    test.deepEqual [],
+      helfer.splitUppercaseUnderscore ''
+    test.deepEqual ['a'],
+      helfer.splitUppercaseUnderscore 'A'
+    test.deepEqual ['first'],
+      helfer.splitUppercaseUnderscore 'FIRST'
+    test.deepEqual ['first', 'where', 'id'],
+      helfer.splitUppercaseUnderscore 'FIRST_WHERE_ID'
+    test.deepEqual ['a', 'one', 'a', 'two', 'a', 'three'],
+      helfer.splitUppercaseUnderscore 'A_ONE_A_TWO_A_THREE'
+    test.deepEqual ['configurl', 'prefix'],
+      helfer.splitUppercaseUnderscore 'configUrl_PREFIX'
+    test.deepEqual ['pages', 'order', 'by', 'created', 'at', 'desc'],
+      helfer.splitUppercaseUnderscore 'PAGES_ORDER_BY_CREATED_AT_DESC'
+
+    test.done()
+
+  'joinUppercaseUnderscore': (test) ->
+    test.equal '', helfer.joinUppercaseUnderscore []
+    test.equal 'FIRST', helfer.joinUppercaseUnderscore ['first']
+    test.equal 'FIRST_WHERE_ID', helfer.joinUppercaseUnderscore ['first', 'where', 'id']
 
     test.done()

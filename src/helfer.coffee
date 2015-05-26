@@ -168,7 +168,6 @@
       return [array, []]
     [array.slice(0, index), array.slice(index)]
 
-  # TODO implement in terms of findIndexOfSubarray
   helfer.splitArrayWhereSequence = (array, value) ->
     sequence = helfer.coerceToArray value
     results = []

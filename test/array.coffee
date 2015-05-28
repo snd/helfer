@@ -144,6 +144,19 @@ module.exports =
     test.deepEqual [['first', 'order', 'report', 'where', 'order', 'id'], ['created', 'at', 'desc'], ['order']],
       helfer.splitArrayWhereSequence ['first', 'order', 'report', 'where', 'order', 'id', 'order', 'by', 'created', 'at', 'desc', 'order', 'by', 'order'], ['order', 'by']
 
+    test.deepEqual [[], []],
+      helfer.splitArrayWhereSequence ['table'], ['table']
+    test.deepEqual [['user'], []],
+      helfer.splitArrayWhereSequence ['user', 'table'], ['table']
+    test.deepEqual [['project', 'message'], []],
+      helfer.splitArrayWhereSequence ['project', 'message', 'table'], ['table']
+    test.deepEqual [['project', 'message'], ['garbage']],
+      helfer.splitArrayWhereSequence ['project', 'message', 'table', 'garbage'], ['table']
+    test.deepEqual [['project', 'message'], ['garbage'], []],
+      helfer.splitArrayWhereSequence ['project', 'message', 'table', 'garbage', 'table'], ['table']
+    test.deepEqual [['project', 'message'], ['garbage'], ['more', 'garbage']],
+      helfer.splitArrayWhereSequence ['project', 'message', 'table', 'garbage', 'table', 'more', 'garbage'], ['table']
+
     test.done()
 
   'reverseIndex': (test) ->

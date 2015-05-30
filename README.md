@@ -71,6 +71,7 @@ also look at the [tests](test) (and [code](src/helfer.coffee)) for documentation
   the second part contains all elements from (and including)
   the first element for which `preducate` returned `true`.
 - `splitArrayWhereSequence(array, sequence)` -> split `array` on each occurence of `sequence` in `array`
+- `arrayOfStringsHasDuplicates(array, sequence)`
 
 ### [object](test/object.coffee)
 

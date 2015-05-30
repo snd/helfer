@@ -194,6 +194,21 @@
       reverseIndex[value].push key
     return reverseIndex
 
+  # returns whether an array of strings contains duplicates.
+  # complexity: O(n) since hash lookup is O(1)
+
+  helfer.arrayOfStringsHasDuplicates = (array) ->
+    i = 0
+    length = array.length
+    valuesSoFar = {}
+    while i < length
+      value = array[i]
+      if Object.prototype.hasOwnProperty.call valuesSoFar, value
+        return true
+      valuesSoFar[value] = true
+      i++
+    return false
+
 ################################################################################
 # object
 

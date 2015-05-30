@@ -170,5 +170,15 @@ module.exports =
       helfer.reverseIndex {a: 'b', c: 'b'}
     test.deepEqual {b: ['a', 'c', 'f'], e: ['d', 'i'], h: ['g']},
       helfer.reverseIndex {a: 'b', c: 'b', d: 'e', f: 'b', g: 'h', i: 'e'}
+    test.done()
 
+  'arrayOfStringsHasDuplicates': (test) ->
+    test.ok not helfer.arrayOfStringsHasDuplicates []
+    test.ok not helfer.arrayOfStringsHasDuplicates ['a']
+    test.ok not helfer.arrayOfStringsHasDuplicates ['a', 'b']
+    test.ok not helfer.arrayOfStringsHasDuplicates ['a', 'b', 'c']
+    test.ok helfer.arrayOfStringsHasDuplicates ['a', 'a']
+    test.ok helfer.arrayOfStringsHasDuplicates ['a', 'a', 'b']
+    test.ok helfer.arrayOfStringsHasDuplicates ['b', 'a', 'b']
+    test.ok helfer.arrayOfStringsHasDuplicates ['a', 'b', 'b']
     test.done()
